@@ -1,0 +1,27 @@
+{
+  "fullNodeVersion": "v2.5.7",
+  "compilerOptionsUsed": {
+    "ignoreUnusedConstantsWarnings": false,
+    "ignoreUnusedVariablesWarnings": false,
+    "ignoreUnusedFieldsWarnings": false,
+    "ignoreUnusedPrivateFunctionsWarnings": false,
+    "ignoreUpdateFieldsCheckWarnings": false,
+    "ignoreCheckExternalCallerWarnings": false
+  },
+  "infos": {
+    "FriendTech": {
+      "sourceFile": "friend_tech.ral",
+      "sourceCodeHash": "c0f047f81f41b8530c0765e25cf1838b9f3d1670fb6e6d5117aaf3b3b32851f8",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "b167e78c0757b8f7e91aee6551953b8f0eef1460d23dde3a7b20caef054c8ee1",
+      "warnings": []
+    },
+    "UpdateOwner": {
+      "sourceFile": "scripts/update_owner.ral",
+      "sourceCodeHash": "10465145dc3b6f71ce3e92a60334735885da0d777e629a6fa60424791bbb895a",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "",
+      "warnings": []
+    }
+  }
+}

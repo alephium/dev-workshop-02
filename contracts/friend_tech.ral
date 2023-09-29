@@ -1,0 +1,20 @@
+Contract FriendTech(
+    mut owner: Address
+) {
+    event OwnerUpdated(
+        previous: Address,
+        new: Address
+    )
+
+    enum ErrorCodes {
+        OwnerAllowedOnly = 0
+    }
+
+    @using(updateFields = true)
+    pub fn updateOwner(newOwner: Address) -> () {
+        checkCaller!(callerAddress!() == owner, ErrorCodes.OwnerAllowedOnly)
+
+        owner = newOwner
+        emit OwnerUpdated(owner, newOwner)
+    }
+}
