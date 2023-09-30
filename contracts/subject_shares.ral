@@ -15,6 +15,10 @@ Contract SubjectShares(
    }
 
    pub fn getBalance(holder: Address) -> U256 {
+       if (holder == subject) {
+           return subjectOwnBalance
+       }
+
        let subjectSharesBalanceContractId = subContractId!(toByteVec!(holder))
        return if (contractExists!(subjectSharesBalanceContractId)) SubjectSharesBalance(subjectSharesBalanceContractId).getBalance() else 0
    }

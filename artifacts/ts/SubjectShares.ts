@@ -120,7 +120,7 @@ export const SubjectShares = new Factory(
   Contract.fromJson(
     SubjectSharesContractJson,
     "",
-    "728b56059c35727ba89c5d990673c30a7190e14874de20202faa41d9ee32d71c"
+    "390262034f6249e2ded2c2615ffe5cd4990183176bc6c40fe6728a6705c79465"
   )
 );
 
