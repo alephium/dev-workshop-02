@@ -21,6 +21,29 @@ describe('Friend tech', () => {
     friendTech = FriendTech.at(deployed.contractInstance.address)
   })
 
+  it('Pricing should work as expected', async () => {
+    if (friendTech === undefined) {
+      fail(`Friend tech contract is not deployed on group ${group}`)
+    }
+
+    const getPrice = async (supply: bigint, amount: bigint = 1n) => {
+      const result = await FriendTech.tests.getPrice({
+        initialFields: { owner: testAddress, totalProtocolFee: 0n, subjectFeePercent: 500n, protocolFeePercent: 500n },
+        testArgs: { supply, amount }
+      })
+      return Number(result.returns) / Number(ONE_ALPH)
+    }
+
+    expect(await getPrice(0n)).toEqual(0)
+    expect(await getPrice(1n)).toEqual(0.0000625)
+    expect(await getPrice(2n)).toEqual(0.00025)
+    expect(await getPrice(3n)).toEqual(0.0005625)
+    expect(await getPrice(50n)).toEqual(0.15625)
+    expect(await getPrice(100n)).toEqual(0.625)
+    expect(await getPrice(200n)).toEqual(2.5)
+    expect(await getPrice(296n)).toEqual(5.476)
+  })
+
   it('Set fee precent should work', async () => {
     if (friendTech === undefined) {
       fail(`Friend tech contract is not deployed on group ${group}`)

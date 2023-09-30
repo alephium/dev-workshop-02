@@ -44,6 +44,18 @@ export namespace FriendTechTypes {
   }>;
 
   export interface CallMethodTable {
+    getPrice: {
+      params: CallContractParams<{ supply: bigint; amount: bigint }>;
+      result: CallContractResult<bigint>;
+    };
+    getBuyPrice: {
+      params: CallContractParams<{ sharesSubject: Address; amount: bigint }>;
+      result: CallContractResult<bigint>;
+    };
+    getSellPrice: {
+      params: CallContractParams<{ sharesSubject: Address; amount: bigint }>;
+      result: CallContractResult<bigint>;
+    };
     getSupply: {
       params: CallContractParams<{ sharesSubject: Address }>;
       result: CallContractResult<bigint>;
@@ -93,6 +105,30 @@ class Factory extends ContractFactory<
     ): Promise<TestContractResult<null>> => {
       return testMethod(this, "setSubjectFeePercent", params);
     },
+    getPrice: async (
+      params: TestContractParams<
+        FriendTechTypes.Fields,
+        { supply: bigint; amount: bigint }
+      >
+    ): Promise<TestContractResult<bigint>> => {
+      return testMethod(this, "getPrice", params);
+    },
+    getBuyPrice: async (
+      params: TestContractParams<
+        FriendTechTypes.Fields,
+        { sharesSubject: Address; amount: bigint }
+      >
+    ): Promise<TestContractResult<bigint>> => {
+      return testMethod(this, "getBuyPrice", params);
+    },
+    getSellPrice: async (
+      params: TestContractParams<
+        FriendTechTypes.Fields,
+        { sharesSubject: Address; amount: bigint }
+      >
+    ): Promise<TestContractResult<bigint>> => {
+      return testMethod(this, "getSellPrice", params);
+    },
     updateOwner: async (
       params: TestContractParams<FriendTechTypes.Fields, { newOwner: Address }>
     ): Promise<TestContractResult<null>> => {
@@ -127,7 +163,7 @@ export const FriendTech = new Factory(
   Contract.fromJson(
     FriendTechContractJson,
     "",
-    "0b90b7d0a5e025e20567d417fb55d3ad68723592d5f4cc8bb1bab5fcf055bcd3"
+    "537b2d1df753b3cd9d406677a0c3703b1bee63802f33eb0c9d145cd37e0d262a"
   )
 );
 
@@ -159,6 +195,39 @@ export class FriendTechInstance extends ContractInstance {
   }
 
   methods = {
+    getPrice: async (
+      params: FriendTechTypes.CallMethodParams<"getPrice">
+    ): Promise<FriendTechTypes.CallMethodResult<"getPrice">> => {
+      return callMethod(
+        FriendTech,
+        this,
+        "getPrice",
+        params,
+        getContractByCodeHash
+      );
+    },
+    getBuyPrice: async (
+      params: FriendTechTypes.CallMethodParams<"getBuyPrice">
+    ): Promise<FriendTechTypes.CallMethodResult<"getBuyPrice">> => {
+      return callMethod(
+        FriendTech,
+        this,
+        "getBuyPrice",
+        params,
+        getContractByCodeHash
+      );
+    },
+    getSellPrice: async (
+      params: FriendTechTypes.CallMethodParams<"getSellPrice">
+    ): Promise<FriendTechTypes.CallMethodResult<"getSellPrice">> => {
+      return callMethod(
+        FriendTech,
+        this,
+        "getSellPrice",
+        params,
+        getContractByCodeHash
+      );
+    },
     getSupply: async (
       params: FriendTechTypes.CallMethodParams<"getSupply">
     ): Promise<FriendTechTypes.CallMethodResult<"getSupply">> => {

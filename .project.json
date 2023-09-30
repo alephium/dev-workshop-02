@@ -11,9 +11,9 @@
   "infos": {
     "FriendTech": {
       "sourceFile": "friend_tech.ral",
-      "sourceCodeHash": "c1e2e5083298687d5575a6d8a30d2e4749aec2f16f4f6560708dbb87b68a0ace",
+      "sourceCodeHash": "632c81a58474f116b6c8893ccf5aab506bfdcc6d59db7242d5c2daeca582847e",
       "bytecodeDebugPatch": "",
-      "codeHashDebug": "0b90b7d0a5e025e20567d417fb55d3ad68723592d5f4cc8bb1bab5fcf055bcd3",
+      "codeHashDebug": "537b2d1df753b3cd9d406677a0c3703b1bee63802f33eb0c9d145cd37e0d262a",
       "warnings": []
     },
     "SetProtocolFeePercent": {

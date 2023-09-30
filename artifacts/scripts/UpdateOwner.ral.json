@@ -1,7 +1,7 @@
 {
   "version": "v2.5.7",
   "name": "UpdateOwner",
-  "bytecodeTemplate": "01010300000005{0}0d0c{1}0102",
+  "bytecodeTemplate": "01010300000005{0}0d0c{1}0105",
   "fieldsSig": {
     "names": [
       "newOwner",

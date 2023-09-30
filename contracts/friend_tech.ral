@@ -25,6 +25,21 @@ Contract FriendTech(
         subjectFeePercent = feePercent
     }
 
+    pub fn getPrice(supply: U256, amount: U256) -> U256 {
+        let sum1 = if (supply == 0) 0 else (supply - 1 )* (supply) * (2 * (supply - 1) + 1) / 6
+        let sum2 = if (supply == 0 && amount == 1) 0 else (supply + amount - 1) * (supply + amount) * (2 * (supply + amount - 1) + 1) / 6
+        let summation = sum2 - sum1
+        return summation * 1 alph / 16000
+    }
+
+    pub fn getBuyPrice(sharesSubject: Address, amount: U256) -> U256 {
+        return getPrice(getSupply(sharesSubject), amount)
+    }
+
+    pub fn getSellPrice(sharesSubject: Address, amount: U256) -> U256 {
+        return getPrice(getSupply(sharesSubject) - amount, amount)
+    }
+
     @using(updateFields = true)
     pub fn updateOwner(newOwner: Address) -> () {
         checkCaller!(callerAddress!() == owner, ErrorCodes.OwnerAllowedOnly)
