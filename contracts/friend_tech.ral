@@ -1,9 +1,22 @@
 Contract FriendTech(
+    subjectSharesTemplateId: ByteVec,
+    subjectSharesBalanceTemplateId: ByteVec,
     mut owner: Address,
     mut totalProtocolFee: U256,
     mut protocolFeePercent: U256,   // basis point
     mut subjectFeePercent: U256     // basis point
 ) {
+    event Trade(
+        trader: Address,
+        subject: Address,
+        isBuy: Bool,
+        shareAmount: U256,
+        alphAmount: U256,
+        protocolAlphAmount: U256,
+        subjectAlphAmount: U256,
+        supply: U256
+    )
+
     event OwnerUpdated(
         previous: Address,
         new: Address
@@ -11,6 +24,10 @@ Contract FriendTech(
 
     enum ErrorCodes {
         OwnerAllowedOnly = 0
+        SubjectAllowedFirstShareOnly = 1
+        NoShareForTheSubject = 2
+        CanNotSellLastShare = 3
+        InsufficientShares = 4
     }
 
     @using(updateFields = true)
@@ -38,6 +55,68 @@ Contract FriendTech(
 
     pub fn getSellPrice(sharesSubject: Address, amount: U256) -> U256 {
         return getPrice(getSupply(sharesSubject) - amount, amount)
+    }
+
+    @using(checkExternalCaller = false, assetsInContract = true, preapprovedAssets = true, updateFields = true)
+    pub fn buyShares(sharesSubject: Address, amount: U256) -> () {
+        let supply = getSupply(sharesSubject)
+        let buyer = callerAddress!()
+        assert!(supply > 0 || buyer == sharesSubject, ErrorCodes.SubjectAllowedFirstShareOnly)
+        let price = getPrice(supply, amount)
+        let protocolFee = price * protocolFeePercent / 10000
+        let subjectFee = price * subjectFeePercent / 10000
+
+        let subjectSharesContractId = subContractId!(toByteVec!(sharesSubject))
+        if (contractExists!(subjectSharesContractId)) {
+            let balance = SubjectShares(subjectSharesContractId).getBalance(buyer)
+            let mut approvedAssets = subjectFee
+            if (balance == 0) {
+                // SubjectSharesBalance contract deposit
+                approvedAssets = approvedAssets + 1 alph
+            }
+            SubjectShares(subjectSharesContractId).buy{buyer -> ALPH: approvedAssets}(buyer, amount, subjectFee)
+        } else {
+            let (encodeImmutableFields, encodeMutableFields) = SubjectShares.encodeFields!(
+                subjectSharesBalanceTemplateId,
+                buyer,
+                selfContractId!(),
+                amount,
+                amount
+            )
+            copyCreateSubContract!{buyer -> ALPH: subjectFee + 1 alph}(
+                toByteVec!(sharesSubject),
+                subjectSharesTemplateId,
+                encodeImmutableFields,
+                encodeMutableFields
+            )
+        }
+
+        totalProtocolFee = totalProtocolFee + protocolFee
+        transferToken!(buyer, selfAddress!(), ALPH, price + protocolFee)
+
+        emit Trade(buyer, sharesSubject, true, amount, price, protocolFee, subjectFee, supply + amount)
+    }
+
+    @using(checkExternalCaller = false, assetsInContract = true, updateFields = true)
+    pub fn sellShares(sharesSubject: Address, amount: U256) -> () {
+        let seller = callerAddress!()
+        let subjectSharesContractId = subContractId!(toByteVec!(sharesSubject))
+        assert!(contractExists!(subjectSharesContractId), ErrorCodes.NoShareForTheSubject)
+        let subjectShares = SubjectShares(subjectSharesContractId)
+        let supply = subjectShares.getSupply()
+        assert!(supply > amount, ErrorCodes.CanNotSellLastShare)
+
+        let price = getPrice(supply - amount, amount)
+        let protocolFee = price * protocolFeePercent / 10000
+        let subjectFee = price * subjectFeePercent / 10000
+        assert!(subjectShares.getBalance(seller) >= amount, ErrorCodes.InsufficientShares)
+
+        totalProtocolFee = totalProtocolFee + protocolFee
+        transferTokenFromSelf!(seller, ALPH, price - subjectFee - protocolFee)
+
+        subjectShares.sell{selfAddress!() -> ALPH : subjectFee}(seller, amount, subjectFee)
+
+        emit Trade(seller, sharesSubject, false, amount, price, protocolFee, subjectFee, supply - amount)
     }
 
     @using(updateFields = true)

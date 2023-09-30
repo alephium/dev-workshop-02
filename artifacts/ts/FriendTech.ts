@@ -30,6 +30,8 @@ import { getContractByCodeHash } from "./contracts";
 // Custom types for the contract
 export namespace FriendTechTypes {
   export type Fields = {
+    subjectSharesTemplateId: HexString;
+    subjectSharesBalanceTemplateId: HexString;
     owner: Address;
     totalProtocolFee: bigint;
     protocolFeePercent: bigint;
@@ -38,6 +40,16 @@ export namespace FriendTechTypes {
 
   export type State = ContractState<Fields>;
 
+  export type TradeEvent = ContractEvent<{
+    trader: Address;
+    subject: Address;
+    isBuy: boolean;
+    shareAmount: bigint;
+    alphAmount: bigint;
+    protocolAlphAmount: bigint;
+    subjectAlphAmount: bigint;
+    supply: bigint;
+  }>;
   export type OwnerUpdatedEvent = ContractEvent<{
     previous: Address;
     new: Address;
@@ -87,8 +99,16 @@ class Factory extends ContractFactory<
     return this.contract.getInitialFieldsWithDefaultValues() as FriendTechTypes.Fields;
   }
 
-  eventIndex = { OwnerUpdated: 0 };
-  consts = { ErrorCodes: { OwnerAllowedOnly: BigInt(0) } };
+  eventIndex = { Trade: 0, OwnerUpdated: 1 };
+  consts = {
+    ErrorCodes: {
+      OwnerAllowedOnly: BigInt(0),
+      SubjectAllowedFirstShareOnly: BigInt(1),
+      NoShareForTheSubject: BigInt(2),
+      CanNotSellLastShare: BigInt(3),
+      InsufficientShares: BigInt(4),
+    },
+  };
 
   at(address: string): FriendTechInstance {
     return new FriendTechInstance(address);
@@ -129,6 +149,22 @@ class Factory extends ContractFactory<
     ): Promise<TestContractResult<bigint>> => {
       return testMethod(this, "getSellPrice", params);
     },
+    buyShares: async (
+      params: TestContractParams<
+        FriendTechTypes.Fields,
+        { sharesSubject: Address; amount: bigint }
+      >
+    ): Promise<TestContractResult<null>> => {
+      return testMethod(this, "buyShares", params);
+    },
+    sellShares: async (
+      params: TestContractParams<
+        FriendTechTypes.Fields,
+        { sharesSubject: Address; amount: bigint }
+      >
+    ): Promise<TestContractResult<null>> => {
+      return testMethod(this, "sellShares", params);
+    },
     updateOwner: async (
       params: TestContractParams<FriendTechTypes.Fields, { newOwner: Address }>
     ): Promise<TestContractResult<null>> => {
@@ -163,7 +199,7 @@ export const FriendTech = new Factory(
   Contract.fromJson(
     FriendTechContractJson,
     "",
-    "537b2d1df753b3cd9d406677a0c3703b1bee63802f33eb0c9d145cd37e0d262a"
+    "048266521a0ba2d6202da7c6cdc1c5a3bea33de828923f7de087c54c7c909382"
   )
 );
 
@@ -181,6 +217,19 @@ export class FriendTechInstance extends ContractInstance {
     return getContractEventsCurrentCount(this.address);
   }
 
+  subscribeTradeEvent(
+    options: EventSubscribeOptions<FriendTechTypes.TradeEvent>,
+    fromCount?: number
+  ): EventSubscription {
+    return subscribeContractEvent(
+      FriendTech.contract,
+      this,
+      options,
+      "Trade",
+      fromCount
+    );
+  }
+
   subscribeOwnerUpdatedEvent(
     options: EventSubscribeOptions<FriendTechTypes.OwnerUpdatedEvent>,
     fromCount?: number
@@ -190,6 +239,20 @@ export class FriendTechInstance extends ContractInstance {
       this,
       options,
       "OwnerUpdated",
+      fromCount
+    );
+  }
+
+  subscribeAllEvents(
+    options: EventSubscribeOptions<
+      FriendTechTypes.TradeEvent | FriendTechTypes.OwnerUpdatedEvent
+    >,
+    fromCount?: number
+  ): EventSubscription {
+    return subscribeContractEvents(
+      FriendTech.contract,
+      this,
+      options,
       fromCount
     );
   }

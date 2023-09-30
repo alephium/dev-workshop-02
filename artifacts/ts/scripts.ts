@@ -11,10 +11,23 @@ import {
   SignerProvider,
   HexString,
 } from "@alephium/web3";
+import { default as BuySharesScriptJson } from "../scripts/BuyShares.ral.json";
+import { default as SellSharesScriptJson } from "../scripts/SellShares.ral.json";
 import { default as SetProtocolFeePercentScriptJson } from "../scripts/SetProtocolFeePercent.ral.json";
 import { default as SetSubjectFeePercentScriptJson } from "../scripts/SetSubjectFeePercent.ral.json";
 import { default as UpdateOwnerScriptJson } from "../scripts/UpdateOwner.ral.json";
 
+export const BuyShares = new ExecutableScript<{
+  subject: Address;
+  amount: bigint;
+  totalPayment: bigint;
+  friendTech: HexString;
+}>(Script.fromJson(BuySharesScriptJson));
+export const SellShares = new ExecutableScript<{
+  subject: Address;
+  amount: bigint;
+  friendTech: HexString;
+}>(Script.fromJson(SellSharesScriptJson));
 export const SetProtocolFeePercent = new ExecutableScript<{
   feePercent: bigint;
   friendTech: HexString;
