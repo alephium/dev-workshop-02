@@ -28,7 +28,6 @@ Contract FriendTech(
     @using(updateFields = true)
     pub fn updateOwner(newOwner: Address) -> () {
         checkCaller!(callerAddress!() == owner, ErrorCodes.OwnerAllowedOnly)
-
         owner = newOwner
         emit OwnerUpdated(owner, newOwner)
     }
@@ -38,5 +37,15 @@ Contract FriendTech(
        checkCaller!(callerAddress!() == owner, ErrorCodes.OwnerAllowedOnly)
        totalProtocolFee = 0
        transferTokenFromSelf!(to, ALPH, totalProtocolFee)
+    }
+
+    pub fn getSupply(sharesSubject: Address) -> U256 {
+        let subjectSharesContractId = subContractId!(toByteVec!(sharesSubject))
+        return if (contractExists!(subjectSharesContractId)) SubjectShares(subjectSharesContractId).getSupply() else 0
+    }
+
+    pub fn getBalance(sharesSubject: Address, holder: Address) -> U256 {
+        let subjectSharesContractId = subContractId!(toByteVec!(sharesSubject))
+        return if (contractExists!(subjectSharesContractId)) SubjectShares(subjectSharesContractId).getBalance(holder) else 0
     }
 }

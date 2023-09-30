@@ -1,0 +1,12 @@
+Contract SubjectShares(
+    supply: U256
+) {
+   pub fn getSupply() -> U256 {
+      return supply
+   }
+
+   pub fn getBalance(holder: Address) -> U256 {
+       let subjectSharesBalanceContractId = subContractId!(toByteVec!(holder))
+       return if (contractExists!(subjectSharesBalanceContractId)) SubjectSharesBalance(subjectSharesBalanceContractId).getBalance() else 0
+   }
+}

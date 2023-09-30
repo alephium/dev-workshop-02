@@ -11,9 +11,9 @@
   "infos": {
     "FriendTech": {
       "sourceFile": "friend_tech.ral",
-      "sourceCodeHash": "155e025f5f31cce0450d4ab0437ad2b1f89809882b8dc61cfeb83793153b7dde",
+      "sourceCodeHash": "c1e2e5083298687d5575a6d8a30d2e4749aec2f16f4f6560708dbb87b68a0ace",
       "bytecodeDebugPatch": "",
-      "codeHashDebug": "e13be0e15e3fb38a35206abfd665509f4fcc55f6d41287d2fe8b203c6bcc38dd",
+      "codeHashDebug": "0b90b7d0a5e025e20567d417fb55d3ad68723592d5f4cc8bb1bab5fcf055bcd3",
       "warnings": []
     },
     "SetProtocolFeePercent": {
@@ -28,6 +28,20 @@
       "sourceCodeHash": "04ac139bd54711a6715cebb4a4750c9e71d4010028853620d6dfdcd2ba23426d",
       "bytecodeDebugPatch": "",
       "codeHashDebug": "",
+      "warnings": []
+    },
+    "SubjectShares": {
+      "sourceFile": "subject_shares.ral",
+      "sourceCodeHash": "418a80136b748b307246175dc95fc8b564cf06eae4552f926fde26cde78a2111",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "f3f6230a8e620772d530169be81f9d9b6c3b3123706b3147aae7c82c9a3aa27a",
+      "warnings": []
+    },
+    "SubjectSharesBalance": {
+      "sourceFile": "subject_shares_balances.ral",
+      "sourceCodeHash": "d6c4d15b36f9650143de8ed4f126d04ace7f56dbef52f95c548c28ae63b67a8a",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "e4ac1069a1aea968d177741c290e109285ba3771c8df9c94e07d80d328a4c0c3",
       "warnings": []
     },
     "UpdateOwner": {

@@ -3,4 +3,6 @@
 /* eslint-disable */
 
 export * from "./FriendTech";
+export * from "./SubjectShares";
+export * from "./SubjectSharesBalance";
 export * from "./scripts";

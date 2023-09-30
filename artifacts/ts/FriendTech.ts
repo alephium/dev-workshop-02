@@ -42,6 +42,29 @@ export namespace FriendTechTypes {
     previous: Address;
     new: Address;
   }>;
+
+  export interface CallMethodTable {
+    getSupply: {
+      params: CallContractParams<{ sharesSubject: Address }>;
+      result: CallContractResult<bigint>;
+    };
+    getBalance: {
+      params: CallContractParams<{ sharesSubject: Address; holder: Address }>;
+      result: CallContractResult<bigint>;
+    };
+  }
+  export type CallMethodParams<T extends keyof CallMethodTable> =
+    CallMethodTable[T]["params"];
+  export type CallMethodResult<T extends keyof CallMethodTable> =
+    CallMethodTable[T]["result"];
+  export type MultiCallParams = Partial<{
+    [Name in keyof CallMethodTable]: CallMethodTable[Name]["params"];
+  }>;
+  export type MultiCallResults<T extends MultiCallParams> = {
+    [MaybeName in keyof T]: MaybeName extends keyof CallMethodTable
+      ? CallMethodTable[MaybeName]["result"]
+      : undefined;
+  };
 }
 
 class Factory extends ContractFactory<
@@ -80,6 +103,22 @@ class Factory extends ContractFactory<
     ): Promise<TestContractResult<null>> => {
       return testMethod(this, "withdrawProtocolFee", params);
     },
+    getSupply: async (
+      params: TestContractParams<
+        FriendTechTypes.Fields,
+        { sharesSubject: Address }
+      >
+    ): Promise<TestContractResult<bigint>> => {
+      return testMethod(this, "getSupply", params);
+    },
+    getBalance: async (
+      params: TestContractParams<
+        FriendTechTypes.Fields,
+        { sharesSubject: Address; holder: Address }
+      >
+    ): Promise<TestContractResult<bigint>> => {
+      return testMethod(this, "getBalance", params);
+    },
   };
 }
 
@@ -88,7 +127,7 @@ export const FriendTech = new Factory(
   Contract.fromJson(
     FriendTechContractJson,
     "",
-    "e13be0e15e3fb38a35206abfd665509f4fcc55f6d41287d2fe8b203c6bcc38dd"
+    "0b90b7d0a5e025e20567d417fb55d3ad68723592d5f4cc8bb1bab5fcf055bcd3"
   )
 );
 
@@ -117,5 +156,41 @@ export class FriendTechInstance extends ContractInstance {
       "OwnerUpdated",
       fromCount
     );
+  }
+
+  methods = {
+    getSupply: async (
+      params: FriendTechTypes.CallMethodParams<"getSupply">
+    ): Promise<FriendTechTypes.CallMethodResult<"getSupply">> => {
+      return callMethod(
+        FriendTech,
+        this,
+        "getSupply",
+        params,
+        getContractByCodeHash
+      );
+    },
+    getBalance: async (
+      params: FriendTechTypes.CallMethodParams<"getBalance">
+    ): Promise<FriendTechTypes.CallMethodResult<"getBalance">> => {
+      return callMethod(
+        FriendTech,
+        this,
+        "getBalance",
+        params,
+        getContractByCodeHash
+      );
+    },
+  };
+
+  async multicall<Calls extends FriendTechTypes.MultiCallParams>(
+    calls: Calls
+  ): Promise<FriendTechTypes.MultiCallResults<Calls>> {
+    return (await multicallMethods(
+      FriendTech,
+      this,
+      calls,
+      getContractByCodeHash
+    )) as FriendTechTypes.MultiCallResults<Calls>;
   }
 }

@@ -3,12 +3,12 @@
 /* eslint-disable */
 
 import { Contract, ContractFactory } from "@alephium/web3";
-import { FriendTech } from ".";
+import { FriendTech, SubjectShares, SubjectSharesBalance } from ".";
 
 let contracts: ContractFactory<any>[] | undefined = undefined;
 export function getContractByCodeHash(codeHash: string): Contract {
   if (contracts === undefined) {
-    contracts = [FriendTech];
+    contracts = [FriendTech, SubjectShares, SubjectSharesBalance];
   }
   const c = contracts.find(
     (c) =>

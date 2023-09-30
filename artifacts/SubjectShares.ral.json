@@ -1,0 +1,52 @@
+{
+  "version": "v2.5.7",
+  "name": "SubjectShares",
+  "bytecode": "0102094024010000000102ce000201000102010e160047cb17011601c54c050c0d160101004a010c02",
+  "codeHash": "f3f6230a8e620772d530169be81f9d9b6c3b3123706b3147aae7c82c9a3aa27a",
+  "fieldsSig": {
+    "names": [
+      "supply"
+    ],
+    "types": [
+      "U256"
+    ],
+    "isMutable": [
+      false
+    ]
+  },
+  "eventsSig": [],
+  "functions": [
+    {
+      "name": "getSupply",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": false,
+      "isPublic": true,
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "getBalance",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": false,
+      "isPublic": true,
+      "paramNames": [
+        "holder"
+      ],
+      "paramTypes": [
+        "Address"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": [
+        "U256"
+      ]
+    }
+  ],
+  "constants": [],
+  "enums": []
+}

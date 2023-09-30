@@ -1,0 +1,7 @@
+Contract SubjectSharesBalance(
+    balance: U256
+) {
+    pub fn getBalance() -> U256 {
+        return balance
+    }
+}

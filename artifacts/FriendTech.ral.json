@@ -1,8 +1,8 @@
 {
   "version": "v2.5.7",
   "name": "FriendTech",
-  "bytecode": "04041040204036404a010001010007b4a000450c7b1600a102010001010007b4a000450c7b1600a10301000101000bb4a000450c7b1600a10005a00016005f01000101000ab4a000450c7b0ca1011600a001a8",
-  "codeHash": "e13be0e15e3fb38a35206abfd665509f4fcc55f6d41287d2fe8b203c6bcc38dd",
+  "bytecode": "04061040204036404a40654082010001010007b4a000450c7b1600a102010001010007b4a000450c7b1600a10301000101000bb4a000450c7b1600a10005a00016005f01000101000ab4a000450c7b0ca1011600a001a801000102010e160047cb17011601c54c050c0d160101004a010c0201000203010f160047cb17021602c54c0616010d0d160201014a010c02",
+  "codeHash": "0b90b7d0a5e025e20567d417fb55d3ad68723592d5f4cc8bb1bab5fcf055bcd3",
   "fieldsSig": {
     "names": [
       "owner",
@@ -100,6 +100,45 @@
         false
       ],
       "returnTypes": []
+    },
+    {
+      "name": "getSupply",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": false,
+      "isPublic": true,
+      "paramNames": [
+        "sharesSubject"
+      ],
+      "paramTypes": [
+        "Address"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "getBalance",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": false,
+      "isPublic": true,
+      "paramNames": [
+        "sharesSubject",
+        "holder"
+      ],
+      "paramTypes": [
+        "Address",
+        "Address"
+      ],
+      "paramIsMutable": [
+        false,
+        false
+      ],
+      "returnTypes": [
+        "U256"
+      ]
     }
   ],
   "constants": [],
