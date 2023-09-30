@@ -39,9 +39,9 @@
     },
     "SubjectSharesBalance": {
       "sourceFile": "subject_shares_balances.ral",
-      "sourceCodeHash": "d6c4d15b36f9650143de8ed4f126d04ace7f56dbef52f95c548c28ae63b67a8a",
+      "sourceCodeHash": "30be7ccfae12a180b958c7094606fb3fa30c3c91a12d78e635303059c8254101",
       "bytecodeDebugPatch": "",
-      "codeHashDebug": "e4ac1069a1aea968d177741c290e109285ba3771c8df9c94e07d80d328a4c0c3",
+      "codeHashDebug": "3db400267b6d4ab5737e7daf05a152f31ed33b890a8579e5256531e1f5c7496a",
       "warnings": []
     },
     "UpdateOwner": {

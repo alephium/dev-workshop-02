@@ -1,17 +1,23 @@
 {
   "version": "v2.5.7",
   "name": "SubjectSharesBalance",
-  "bytecode": "010109010000000102ce0002",
-  "codeHash": "e4ac1069a1aea968d177741c290e109285ba3771c8df9c94e07d80d328a4c0c3",
+  "bytecode": "0303091c403f010000000102a00002010001010009b3ce01410c7ba00016002aa100010201010014b3ce01410c7ba0001600340d7ba00016002ba100a0000c2f4c02ce00b0",
+  "codeHash": "3db400267b6d4ab5737e7daf05a152f31ed33b890a8579e5256531e1f5c7496a",
   "fieldsSig": {
     "names": [
+      "subject",
+      "subjectSharesContractId",
       "balance"
     ],
     "types": [
+      "Address",
+      "ByteVec",
       "U256"
     ],
     "isMutable": [
-      false
+      false,
+      false,
+      true
     ]
   },
   "eventsSig": [],
@@ -27,8 +33,60 @@
       "returnTypes": [
         "U256"
       ]
+    },
+    {
+      "name": "addBalance",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": false,
+      "isPublic": true,
+      "paramNames": [
+        "amount"
+      ],
+      "paramTypes": [
+        "U256"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "reduceBalance",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": true,
+      "isPublic": true,
+      "paramNames": [
+        "amount"
+      ],
+      "paramTypes": [
+        "U256"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
     }
   ],
   "constants": [],
-  "enums": []
+  "enums": [
+    {
+      "name": "ErrorCodes",
+      "fields": [
+        {
+          "name": "SubjectSharesContractAllowedOnly",
+          "value": {
+            "type": "U256",
+            "value": "0"
+          }
+        },
+        {
+          "name": "NotEnoughBalance",
+          "value": {
+            "type": "U256",
+            "value": "1"
+          }
+        }
+      ]
+    }
+  ]
 }
