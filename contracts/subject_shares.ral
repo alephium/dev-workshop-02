@@ -1,6 +1,15 @@
 Contract SubjectShares(
-    supply: U256
+    subjectSharesBalanceTemplateId: ByteVec,
+    subject: Address,
+    friendContractId: ByteVec,
+    mut subjectOwnBalance: U256,
+    mut supply: U256
 ) {
+    enum ErrorCodes {
+        FriendContractAllowedOnly = 0
+        NotEnoughBalance = 1
+    }
+
    pub fn getSupply() -> U256 {
       return supply
    }
@@ -8,5 +17,42 @@ Contract SubjectShares(
    pub fn getBalance(holder: Address) -> U256 {
        let subjectSharesBalanceContractId = subContractId!(toByteVec!(holder))
        return if (contractExists!(subjectSharesBalanceContractId)) SubjectSharesBalance(subjectSharesBalanceContractId).getBalance() else 0
+   }
+
+   @using(preapprovedAssets = true, assetsInContract = true, updateFields = true)
+   pub fn buy(holder: Address, amount: U256, subjectFee: U256) -> () {
+        checkCaller!(callerContractId!() == friendContractId, ErrorCodes.FriendContractAllowedOnly)
+        supply = supply + amount
+
+        if (holder == subject) {
+          subjectOwnBalance = subjectOwnBalance + amount
+        } else {
+          let subjectSharesBalanceContractId = subContractId!(toByteVec!(holder))
+          if (contractExists!(subjectSharesBalanceContractId)) {
+              SubjectSharesBalance(subjectSharesBalanceContractId).addBalance(amount)
+          } else {
+              let (encodeImmutableFields, encodeMutableFields) = SubjectSharesBalance.encodeFields!(holder, selfContractId!(), amount)
+              copyCreateSubContract!{holder -> ALPH: 1 alph}(
+                  toByteVec!(holder),
+                  subjectSharesBalanceTemplateId,
+                  encodeImmutableFields,
+                  encodeMutableFields
+              )
+          }
+        }
+
+       transferToken!(holder, selfAddress!(), ALPH, subjectFee)
+   }
+
+   @using(preapprovedAssets = true, assetsInContract = true, updateFields = true)
+   pub fn sell(seller: Address, amount: U256, subjectFee: U256) -> () {
+       checkCaller!(callerContractId!() == friendContractId, ErrorCodes.FriendContractAllowedOnly)
+       assert!(supply > amount, ErrorCodes.NotEnoughBalance)
+       supply = supply - amount
+
+       let subjectSharesBalanceContractId = subContractId!(toByteVec!(seller))
+       let subjectSharesBalanceContract = SubjectSharesBalance(subjectSharesBalanceContractId)
+       subjectSharesBalanceContract.reduceBalance(amount)
+       transferToken!(callerAddress!(), selfAddress!(), ALPH, subjectFee)
    }
 }
