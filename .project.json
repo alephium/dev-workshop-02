@@ -32,9 +32,9 @@
     },
     "SubjectShares": {
       "sourceFile": "subject_shares.ral",
-      "sourceCodeHash": "418a80136b748b307246175dc95fc8b564cf06eae4552f926fde26cde78a2111",
+      "sourceCodeHash": "e23a008263cc3fb7c3669eb42361e01cedbe43771dacdb0af1512e9cba4dec9c",
       "bytecodeDebugPatch": "",
-      "codeHashDebug": "f3f6230a8e620772d530169be81f9d9b6c3b3123706b3147aae7c82c9a3aa27a",
+      "codeHashDebug": "728b56059c35727ba89c5d990673c30a7190e14874de20202faa41d9ee32d71c",
       "warnings": []
     },
     "SubjectSharesBalance": {

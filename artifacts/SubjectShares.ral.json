@@ -1,17 +1,29 @@
 {
   "version": "v2.5.7",
   "name": "SubjectShares",
-  "bytecode": "0102094024010000000102ce000201000102010e160047cb17011601c54c050c0d160101004a010c02",
-  "codeHash": "f3f6230a8e620772d530169be81f9d9b6c3b3123706b3147aae7c82c9a3aa27a",
+  "bytecode": "0504094024408b40bc010000000102a0010201000102010e160047cb17011601c54c050c0d160101004a010c0201010306004036b3ce02410c7ba00116012aa1011600ce01454c05a00016012aa1004a4020160047cb17031603c54c0616010d0c160301014a13ce01b1130264160113016417051704160013c40de0b6b3a7640000a2160047ce0016041605c1181600b21602a701010305001db3ce02410c7ba0011601330d7ba00116012ba101160047cb17031603170416010d0c16040102b4b21602a7",
+  "codeHash": "728b56059c35727ba89c5d990673c30a7190e14874de20202faa41d9ee32d71c",
   "fieldsSig": {
     "names": [
+      "subjectSharesBalanceTemplateId",
+      "subject",
+      "friendContractId",
+      "subjectOwnBalance",
       "supply"
     ],
     "types": [
+      "ByteVec",
+      "Address",
+      "ByteVec",
+      "U256",
       "U256"
     ],
     "isMutable": [
-      false
+      false,
+      false,
+      false,
+      true,
+      true
     ]
   },
   "eventsSig": [],
@@ -45,8 +57,72 @@
       "returnTypes": [
         "U256"
       ]
+    },
+    {
+      "name": "buy",
+      "usePreapprovedAssets": true,
+      "useAssetsInContract": true,
+      "isPublic": true,
+      "paramNames": [
+        "holder",
+        "amount",
+        "subjectFee"
+      ],
+      "paramTypes": [
+        "Address",
+        "U256",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "sell",
+      "usePreapprovedAssets": true,
+      "useAssetsInContract": true,
+      "isPublic": true,
+      "paramNames": [
+        "seller",
+        "amount",
+        "subjectFee"
+      ],
+      "paramTypes": [
+        "Address",
+        "U256",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false
+      ],
+      "returnTypes": []
     }
   ],
   "constants": [],
-  "enums": []
+  "enums": [
+    {
+      "name": "ErrorCodes",
+      "fields": [
+        {
+          "name": "FriendContractAllowedOnly",
+          "value": {
+            "type": "U256",
+            "value": "0"
+          }
+        },
+        {
+          "name": "NotEnoughBalance",
+          "value": {
+            "type": "U256",
+            "value": "1"
+          }
+        }
+      ]
+    }
+  ]
 }
