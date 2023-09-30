@@ -8,9 +8,13 @@ const deployFriendTech: DeployFunction<Settings> = async (
   deployer: Deployer,
   network: Network<Settings>
 ): Promise<void> => {
-  // Get settings
+  const subjectSharesTemplateResult = deployer.getDeployContractResult('SubjectShares')
+  const subjectSharesBalanceTemplateResult = deployer.getDeployContractResult('SubjectSharesBalance')
+
   const result = await deployer.deployContract(FriendTech, {
     initialFields: {
+      subjectSharesTemplateId: subjectSharesTemplateResult.contractInstance.contractId,
+      subjectSharesBalanceTemplateId: subjectSharesBalanceTemplateResult.contractInstance.contractId,
       owner: deployer.account.address,
       totalProtocolFee: 0n,
       protocolFeePercent: network.settings.protocolFeePercent,

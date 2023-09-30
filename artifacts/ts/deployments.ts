@@ -4,12 +4,23 @@
 
 import { RunScriptResult, DeployContractExecutionResult } from "@alephium/cli";
 import { NetworkId } from "@alephium/web3";
-import { FriendTech, FriendTechInstance } from ".";
+import {
+  FriendTech,
+  FriendTechInstance,
+  SubjectSharesBalance,
+  SubjectSharesBalanceInstance,
+  SubjectShares,
+  SubjectSharesInstance,
+} from ".";
 import { default as devnetDeployments } from "../.deployments.devnet.json";
 
 export type Deployments = {
   deployerAddress: string;
-  contracts: { FriendTech: DeployContractExecutionResult<FriendTechInstance> };
+  contracts: {
+    FriendTech: DeployContractExecutionResult<FriendTechInstance>;
+    SubjectSharesBalance: DeployContractExecutionResult<SubjectSharesBalanceInstance>;
+    SubjectShares: DeployContractExecutionResult<SubjectSharesInstance>;
+  };
 };
 
 function toDeployments(json: any): Deployments {
@@ -18,6 +29,18 @@ function toDeployments(json: any): Deployments {
       ...json.contracts["FriendTech"],
       contractInstance: FriendTech.at(
         json.contracts["FriendTech"].contractInstance.address
+      ),
+    },
+    SubjectSharesBalance: {
+      ...json.contracts["SubjectSharesBalance"],
+      contractInstance: SubjectSharesBalance.at(
+        json.contracts["SubjectSharesBalance"].contractInstance.address
+      ),
+    },
+    SubjectShares: {
+      ...json.contracts["SubjectShares"],
+      contractInstance: SubjectShares.at(
+        json.contracts["SubjectShares"].contractInstance.address
       ),
     },
   };

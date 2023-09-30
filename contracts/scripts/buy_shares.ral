@@ -1,0 +1,3 @@
+TxScript BuyShares(subject: Address, amount: U256, totalPayment:U256, friendTech: FriendTech) {
+    friendTech.buyShares{callerAddress!() -> ALPH: totalPayment}(subject, amount)
+}

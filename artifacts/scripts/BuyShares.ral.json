@@ -1,17 +1,23 @@
 {
   "version": "v2.5.7",
-  "name": "UpdateOwner",
-  "bytecodeTemplate": "01010300000005{0}0d0c{1}0107",
+  "name": "BuyShares",
+  "bytecodeTemplate": "01010300000009b4{2}a2{0}{1}0e0c{3}0105",
   "fieldsSig": {
     "names": [
-      "newOwner",
+      "subject",
+      "amount",
+      "totalPayment",
       "friendTech"
     ],
     "types": [
       "Address",
+      "U256",
+      "U256",
       "ByteVec"
     ],
     "isMutable": [
+      false,
+      false,
       false,
       false
     ]

@@ -9,11 +9,25 @@
     "ignoreCheckExternalCallerWarnings": false
   },
   "infos": {
+    "BuyShares": {
+      "sourceFile": "scripts/buy_shares.ral",
+      "sourceCodeHash": "4520df20cdef1a516a14d22c4f2840b86337230c90a4b1e52050f1cd5b08cf6d",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "",
+      "warnings": []
+    },
     "FriendTech": {
       "sourceFile": "friend_tech.ral",
-      "sourceCodeHash": "632c81a58474f116b6c8893ccf5aab506bfdcc6d59db7242d5c2daeca582847e",
+      "sourceCodeHash": "99bf2001033a6bdd0239c952f90be24ca84d122347a7a130139c704023024621",
       "bytecodeDebugPatch": "",
-      "codeHashDebug": "537b2d1df753b3cd9d406677a0c3703b1bee63802f33eb0c9d145cd37e0d262a",
+      "codeHashDebug": "048266521a0ba2d6202da7c6cdc1c5a3bea33de828923f7de087c54c7c909382",
+      "warnings": []
+    },
+    "SellShares": {
+      "sourceFile": "scripts/sell_shares.ral",
+      "sourceCodeHash": "cd36bf04619ab82c5bb560707bf40dd90f0681652633b0bab95d87eeb2331f65",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "",
       "warnings": []
     },
     "SetProtocolFeePercent": {

@@ -28,7 +28,14 @@ describe('Friend tech', () => {
 
     const getPrice = async (supply: bigint, amount: bigint = 1n) => {
       const result = await FriendTech.tests.getPrice({
-        initialFields: { owner: testAddress, totalProtocolFee: 0n, subjectFeePercent: 500n, protocolFeePercent: 500n },
+        initialFields: {
+          subjectSharesTemplateId: '',
+          subjectSharesBalanceTemplateId: '',
+          owner: testAddress,
+          totalProtocolFee: 0n,
+          subjectFeePercent: 500n,
+          protocolFeePercent: 500n
+        },
         testArgs: { supply, amount }
       })
       return Number(result.returns) / Number(ONE_ALPH)
