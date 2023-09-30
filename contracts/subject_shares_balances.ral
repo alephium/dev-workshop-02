@@ -1,7 +1,32 @@
 Contract SubjectSharesBalance(
-    balance: U256
+    holder: Address,
+    subjectSharesContractId: ByteVec,
+    mut balance: U256
 ) {
+    enum ErrorCodes {
+        SubjectSharesContractAllowedOnly = 0
+        NotEnoughBalance = 1
+    }
+
     pub fn getBalance() -> U256 {
         return balance
+    }
+
+   @using(updateFields = true)
+    pub fn addBalance(amount: U256) -> () {
+        checkCaller!(callerContractId!() == subjectSharesContractId, ErrorCodes.SubjectSharesContractAllowedOnly)
+        balance = balance + amount
+    }
+
+   @using(updateFields = true, assetsInContract = true)
+    pub fn reduceBalance(amount: U256) -> () {
+        checkCaller!(callerContractId!() == subjectSharesContractId, ErrorCodes.SubjectSharesContractAllowedOnly)
+        assert!(balance >= amount, ErrorCodes.NotEnoughBalance)
+
+        balance = balance - amount
+
+        if (balance == 0) {
+            destroySelf!(holder)
+        }
     }
 }

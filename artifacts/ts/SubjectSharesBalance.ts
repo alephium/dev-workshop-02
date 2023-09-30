@@ -30,6 +30,8 @@ import { getContractByCodeHash } from "./contracts";
 // Custom types for the contract
 export namespace SubjectSharesBalanceTypes {
   export type Fields = {
+    holder: Address;
+    subjectSharesContractId: HexString;
     balance: bigint;
   };
 
@@ -63,6 +65,13 @@ class Factory extends ContractFactory<
     return this.contract.getInitialFieldsWithDefaultValues() as SubjectSharesBalanceTypes.Fields;
   }
 
+  consts = {
+    ErrorCodes: {
+      SubjectSharesContractAllowedOnly: BigInt(0),
+      NotEnoughBalance: BigInt(1),
+    },
+  };
+
   at(address: string): SubjectSharesBalanceInstance {
     return new SubjectSharesBalanceInstance(address);
   }
@@ -76,6 +85,22 @@ class Factory extends ContractFactory<
     ): Promise<TestContractResult<bigint>> => {
       return testMethod(this, "getBalance", params);
     },
+    addBalance: async (
+      params: TestContractParams<
+        SubjectSharesBalanceTypes.Fields,
+        { amount: bigint }
+      >
+    ): Promise<TestContractResult<null>> => {
+      return testMethod(this, "addBalance", params);
+    },
+    reduceBalance: async (
+      params: TestContractParams<
+        SubjectSharesBalanceTypes.Fields,
+        { amount: bigint }
+      >
+    ): Promise<TestContractResult<null>> => {
+      return testMethod(this, "reduceBalance", params);
+    },
   };
 }
 
@@ -84,7 +109,7 @@ export const SubjectSharesBalance = new Factory(
   Contract.fromJson(
     SubjectSharesBalanceContractJson,
     "",
-    "e4ac1069a1aea968d177741c290e109285ba3771c8df9c94e07d80d328a4c0c3"
+    "3db400267b6d4ab5737e7daf05a152f31ed33b890a8579e5256531e1f5c7496a"
   )
 );
 
