@@ -46,9 +46,9 @@
     },
     "SubjectShares": {
       "sourceFile": "subject_shares.ral",
-      "sourceCodeHash": "a6470e509f052ee8b4619c702bbff24217fcfdcdad7c1f2bf13e4eb571fa7e08",
+      "sourceCodeHash": "3efc8aa689536d301db9dcc34e1e8dcf3bc15d678672980857e261e7e13af8a3",
       "bytecodeDebugPatch": "",
-      "codeHashDebug": "bfb134ae3d131c7e242b35d2c089e1d94c2f9422eebca4d280b398dcab0dba14",
+      "codeHashDebug": "6b2f663e2ed82d62ab70167172c2c974a73d2c6c24a67a096c3c8273c2bf9e54",
       "warnings": []
     },
     "SubjectSharesBalance": {
