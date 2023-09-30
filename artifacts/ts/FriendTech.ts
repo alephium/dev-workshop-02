@@ -31,6 +31,9 @@ import { getContractByCodeHash } from "./contracts";
 export namespace FriendTechTypes {
   export type Fields = {
     owner: Address;
+    totalProtocolFee: bigint;
+    protocolFeePercent: bigint;
+    subjectFeePercent: bigint;
   };
 
   export type State = ContractState<Fields>;
@@ -57,10 +60,25 @@ class Factory extends ContractFactory<
   }
 
   tests = {
+    setProtocolFeePercent: async (
+      params: TestContractParams<FriendTechTypes.Fields, { feePercent: bigint }>
+    ): Promise<TestContractResult<null>> => {
+      return testMethod(this, "setProtocolFeePercent", params);
+    },
+    setSubjectFeePercent: async (
+      params: TestContractParams<FriendTechTypes.Fields, { feePercent: bigint }>
+    ): Promise<TestContractResult<null>> => {
+      return testMethod(this, "setSubjectFeePercent", params);
+    },
     updateOwner: async (
       params: TestContractParams<FriendTechTypes.Fields, { newOwner: Address }>
     ): Promise<TestContractResult<null>> => {
       return testMethod(this, "updateOwner", params);
+    },
+    withdrawProtocolFee: async (
+      params: TestContractParams<FriendTechTypes.Fields, { to: Address }>
+    ): Promise<TestContractResult<null>> => {
+      return testMethod(this, "withdrawProtocolFee", params);
     },
   };
 }
@@ -70,7 +88,7 @@ export const FriendTech = new Factory(
   Contract.fromJson(
     FriendTechContractJson,
     "",
-    "b167e78c0757b8f7e91aee6551953b8f0eef1460d23dde3a7b20caef054c8ee1"
+    "e13be0e15e3fb38a35206abfd665509f4fcc55f6d41287d2fe8b203c6bcc38dd"
   )
 );
 

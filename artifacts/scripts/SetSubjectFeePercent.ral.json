@@ -1,14 +1,14 @@
 {
   "version": "v2.5.7",
-  "name": "UpdateOwner",
-  "bytecodeTemplate": "01010300000005{0}0d0c{1}0102",
+  "name": "SetSubjectFeePercent",
+  "bytecodeTemplate": "01010300000005{0}0d0c{1}0101",
   "fieldsSig": {
     "names": [
-      "newOwner",
+      "feePercent",
       "friendTech"
     ],
     "types": [
-      "Address",
+      "U256",
       "ByteVec"
     ],
     "isMutable": [

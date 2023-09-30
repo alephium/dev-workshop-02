@@ -1,8 +1,12 @@
 import { Configuration } from '@alephium/cli'
+import { Number256 } from '@alephium/web3'
 
 // Settings are usually for configuring
-export type Settings = {}
-const defaultSettings: Settings = {}
+export type Settings = {
+  protocolFeePercent: Number256
+  subjectFeePercent: Number256
+}
+const defaultSettings: Settings = { protocolFeePercent: 500n, subjectFeePercent: 500n }
 
 const configuration: Configuration<Settings> = {
   networks: {

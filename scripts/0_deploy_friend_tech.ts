@@ -11,7 +11,10 @@ const deployFriendTech: DeployFunction<Settings> = async (
   // Get settings
   const result = await deployer.deployContract(FriendTech, {
     initialFields: {
-      owner: deployer.account.address
+      owner: deployer.account.address,
+      totalProtocolFee: 0n,
+      protocolFeePercent: network.settings.protocolFeePercent,
+      subjectFeePercent: network.settings.subjectFeePercent
     }
   })
   console.log('FriendTech contract id: ' + result.contractInstance.contractId)

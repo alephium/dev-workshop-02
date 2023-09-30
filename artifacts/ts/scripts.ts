@@ -11,8 +11,18 @@ import {
   SignerProvider,
   HexString,
 } from "@alephium/web3";
+import { default as SetProtocolFeePercentScriptJson } from "../scripts/SetProtocolFeePercent.ral.json";
+import { default as SetSubjectFeePercentScriptJson } from "../scripts/SetSubjectFeePercent.ral.json";
 import { default as UpdateOwnerScriptJson } from "../scripts/UpdateOwner.ral.json";
 
+export const SetProtocolFeePercent = new ExecutableScript<{
+  feePercent: bigint;
+  friendTech: HexString;
+}>(Script.fromJson(SetProtocolFeePercentScriptJson));
+export const SetSubjectFeePercent = new ExecutableScript<{
+  feePercent: bigint;
+  friendTech: HexString;
+}>(Script.fromJson(SetSubjectFeePercentScriptJson));
 export const UpdateOwner = new ExecutableScript<{
   newOwner: Address;
   friendTech: HexString;

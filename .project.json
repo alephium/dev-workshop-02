@@ -11,9 +11,23 @@
   "infos": {
     "FriendTech": {
       "sourceFile": "friend_tech.ral",
-      "sourceCodeHash": "c0f047f81f41b8530c0765e25cf1838b9f3d1670fb6e6d5117aaf3b3b32851f8",
+      "sourceCodeHash": "155e025f5f31cce0450d4ab0437ad2b1f89809882b8dc61cfeb83793153b7dde",
       "bytecodeDebugPatch": "",
-      "codeHashDebug": "b167e78c0757b8f7e91aee6551953b8f0eef1460d23dde3a7b20caef054c8ee1",
+      "codeHashDebug": "e13be0e15e3fb38a35206abfd665509f4fcc55f6d41287d2fe8b203c6bcc38dd",
+      "warnings": []
+    },
+    "SetProtocolFeePercent": {
+      "sourceFile": "scripts/set_protocol_fee_percent.ral",
+      "sourceCodeHash": "24401e21b85568a65f70732d3a3fa67be303d326eaf869bdac3697a9e7d52414",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "",
+      "warnings": []
+    },
+    "SetSubjectFeePercent": {
+      "sourceFile": "scripts/set_subject_fee_percent.ral",
+      "sourceCodeHash": "04ac139bd54711a6715cebb4a4750c9e71d4010028853620d6dfdcd2ba23426d",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "",
       "warnings": []
     },
     "UpdateOwner": {

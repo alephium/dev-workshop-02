@@ -1,0 +1,3 @@
+TxScript SetProtocolFeePercent(feePercent: U256, friendTech: FriendTech) {
+    friendTech.setProtocolFeePercent(feePercent)
+}

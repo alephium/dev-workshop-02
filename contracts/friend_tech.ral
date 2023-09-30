@@ -1,5 +1,8 @@
 Contract FriendTech(
-    mut owner: Address
+    mut owner: Address,
+    mut totalProtocolFee: U256,
+    mut protocolFeePercent: U256,   // basis point
+    mut subjectFeePercent: U256     // basis point
 ) {
     event OwnerUpdated(
         previous: Address,
@@ -11,10 +14,29 @@ Contract FriendTech(
     }
 
     @using(updateFields = true)
+    pub fn setProtocolFeePercent(feePercent: U256) -> () {
+        checkCaller!(callerAddress!() == owner, ErrorCodes.OwnerAllowedOnly)
+        protocolFeePercent = feePercent
+    }
+
+    @using(updateFields = true)
+    pub fn setSubjectFeePercent(feePercent: U256) -> () {
+        checkCaller!(callerAddress!() == owner, ErrorCodes.OwnerAllowedOnly)
+        subjectFeePercent = feePercent
+    }
+
+    @using(updateFields = true)
     pub fn updateOwner(newOwner: Address) -> () {
         checkCaller!(callerAddress!() == owner, ErrorCodes.OwnerAllowedOnly)
 
         owner = newOwner
         emit OwnerUpdated(owner, newOwner)
+    }
+
+    @using(updateFields = true)
+    pub fn withdrawProtocolFee(to: Address) -> () {
+       checkCaller!(callerAddress!() == owner, ErrorCodes.OwnerAllowedOnly)
+       totalProtocolFee = 0
+       transferTokenFromSelf!(to, ALPH, totalProtocolFee)
     }
 }

@@ -1,16 +1,25 @@
 {
   "version": "v2.5.7",
   "name": "FriendTech",
-  "bytecode": "01011601000101000bb4a000450c7b1600a10005a00016005f",
-  "codeHash": "b167e78c0757b8f7e91aee6551953b8f0eef1460d23dde3a7b20caef054c8ee1",
+  "bytecode": "04041040204036404a010001010007b4a000450c7b1600a102010001010007b4a000450c7b1600a10301000101000bb4a000450c7b1600a10005a00016005f01000101000ab4a000450c7b0ca1011600a001a8",
+  "codeHash": "e13be0e15e3fb38a35206abfd665509f4fcc55f6d41287d2fe8b203c6bcc38dd",
   "fieldsSig": {
     "names": [
-      "owner"
+      "owner",
+      "totalProtocolFee",
+      "protocolFeePercent",
+      "subjectFeePercent"
     ],
     "types": [
-      "Address"
+      "Address",
+      "U256",
+      "U256",
+      "U256"
     ],
     "isMutable": [
+      true,
+      true,
+      true,
       true
     ]
   },
@@ -29,12 +38,60 @@
   ],
   "functions": [
     {
+      "name": "setProtocolFeePercent",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": false,
+      "isPublic": true,
+      "paramNames": [
+        "feePercent"
+      ],
+      "paramTypes": [
+        "U256"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "setSubjectFeePercent",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": false,
+      "isPublic": true,
+      "paramNames": [
+        "feePercent"
+      ],
+      "paramTypes": [
+        "U256"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
       "name": "updateOwner",
       "usePreapprovedAssets": false,
       "useAssetsInContract": false,
       "isPublic": true,
       "paramNames": [
         "newOwner"
+      ],
+      "paramTypes": [
+        "Address"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "withdrawProtocolFee",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": false,
+      "isPublic": true,
+      "paramNames": [
+        "to"
       ],
       "paramTypes": [
         "Address"
