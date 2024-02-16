@@ -35,12 +35,12 @@ Contract SubjectShares(
           if (contractExists!(subjectSharesBalanceContractId)) {
               SubjectSharesBalance(subjectSharesBalanceContractId).addBalance(amount)
           } else {
-              let (encodeImmutableFields, encodeMutableFields) = SubjectSharesBalance.encodeFields!(subject, selfContractId!(), amount)
+              let (encodedImmutableFields, encodedMutableFields) = SubjectSharesBalance.encodeFields!(subject, selfContractId!(), amount)
               copyCreateSubContract!{holder -> ALPH: 1 alph}(
                   toByteVec!(holder),
                   subjectSharesBalanceTemplateId,
-                  encodeImmutableFields,
-                  encodeMutableFields
+                  encodedImmutableFields,
+                  encodedMutableFields
               )
           }
         }
