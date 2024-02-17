@@ -76,7 +76,7 @@ Contract FriendTech(
             }
             SubjectShares(subjectSharesContractId).buy{buyer -> ALPH: approvedAssets}(buyer, amount, subjectFee)
         } else {
-            let (encodeImmutableFields, encodeMutableFields) = SubjectShares.encodeFields!(
+            let (encodedImmutableFields, encodedMutableFields) = SubjectShares.encodeFields!(
                 subjectSharesBalanceTemplateId,
                 buyer,
                 selfContractId!(),
@@ -86,8 +86,8 @@ Contract FriendTech(
             copyCreateSubContract!{buyer -> ALPH: subjectFee + 1 alph}(
                 toByteVec!(sharesSubject),
                 subjectSharesTemplateId,
-                encodeImmutableFields,
-                encodeMutableFields
+                encodedImmutableFields,
+                encodedMutableFields
             )
         }
 
